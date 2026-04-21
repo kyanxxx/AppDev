@@ -1,128 +1,160 @@
-import { useState } from 'react';
-import { Alert, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { useState, useEffect } from 'react';
+import { Image, Alert, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
-import { ROUTES } from '../../utils';
+import { IMG, ROUTES } from '../../utils';
+import { authLogin } from '../../app/actions';
 
 const Login = () => {
-  const [emailAdd, setEmailAdd] = useState('');
-  const [password, setPassword] = useState('');
-  const navigation = useNavigation();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    if (!emailAdd || !password) {
-      Alert.alert(
-        'Invalid Credentials',
-        'Please enter valid email address and password'
-      );
-      return;
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth);
+
+    useEffect(() => {
+    if (auth.isError) {
+        Alert.alert(
+            'Invalid Credentials',
+            auth.error || 'Incorrect username or password'
+        );
+
+        // clear error after showing alert
+        dispatch({ type: 'AUTH_CLEAR_ERROR' });
     }
+}, [auth.isError]);
 
-    // Add login logic here
-  };
+    return (
+        <View
+        style={{
+            flex: 1,
+            backgroundColor: '#F8FAFC',
+            padding: 25,
+            justifyContent: 'center',
+        }}
+        >
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.title}>Welcome Back</Text>
-
-        <CustomTextInput
-          label={'Email Address'}
-          placeholder={'Enter Email Address'}
-          value={emailAdd}
-          onChangeText={setEmailAdd}
-          containerStyle={styles.inputContainer}
-          textStyle={styles.input}
+        {/* Logo */}
+        <Image
+            source={IMG.LOGO}
+            style={{
+                width: 240,
+                height: 200,
+                alignSelf: 'center',
+                marginBottom: 30,
+            }}
+            resizeMode="contain"
         />
 
-        <CustomTextInput
-          label={'Password'}
-          placeholder={'Enter Password'}
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          containerStyle={styles.inputContainer}
-          textStyle={styles.input}
-        />
+        {/* Form Card */}
+        <View
+            style={{
+                backgroundColor: '#FFFFFF',
+                borderRadius: 15,
+                padding: 20,
+                shadowColor: '#000',
+                shadowOpacity: 0.08,
+                shadowRadius: 10,
+                elevation: 5,
+            }}
+        >
+            <CustomTextInput
+                label={'Username'}
+                placeholder={'Enter Username'}
+                value={username}
+                onChangeText={val => setUsername(val)}
+                containerStyle={{
+                    marginBottom: 15,
+                }}
+                textStyle={{
+                    borderRadius: 10,
+                    color: '#000',
+                    marginLeft: 10,
+                    fontWeight: '500',
+                }}
+            />
 
-        <CustomButton
-          label={'LOGIN'}
-          containerStyle={styles.button}
-          textStyle={styles.buttonText}
-          onPress={handleLogin}
-        />
+            <CustomTextInput
+                label={'Password'}
+                placeholder={'Enter Password'}
+                value={password}
+                onChangeText={val => setPassword(val)}
+                containerStyle={{
+                    marginBottom: 10,
+                }}
+                textStyle={{
+                    borderRadius: 10,
+                    color: '#000',
+                    marginLeft: 10,
+                    fontWeight: '500',
+                }}
+            />
 
-        <View style={styles.registerContainer}>
-          <Text style={styles.registerText}>Create an account?</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(ROUTES.REGISTER)}
-          >
-            <Text style={styles.registerLink}>Register</Text>
-          </TouchableOpacity>
+            <CustomButton
+                label={'LOGIN'}
+                containerStyle={{
+                    backgroundColor: '#1E3A8A',
+                    borderRadius: 10,
+                    marginTop: 10,
+                    paddingVertical: 14,
+                }}
+                textStyle={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    letterSpacing: 1,
+                }}
+                onPress={() => {
+                    if (username === '' || password === '') {
+                        Alert.alert(
+                        'Invalid Credentials',
+                        'Please enter valid username and password',
+                        );
+                        return;
+                    }
+
+                    dispatch(
+                        authLogin({
+                            username,
+                            password,
+                        }),
+                    );
+                }}
+            />
         </View>
-      </View>
-    </View>
-  );
+
+        {/* Register */}
+        <View
+            style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 25,
+            }}
+        >
+            <Text style={{ color: '#555' }}>
+                Create an account?
+            </Text>
+
+            <TouchableOpacity
+                onPress={() => navigation.navigate(ROUTES.REGISTER)}
+            >
+                <Text
+                    style={{
+                        color: '#2563EB',
+                        marginLeft: 6,
+                        fontWeight: 'bold',
+                    }}
+                >
+                    Register
+                </Text>
+            </TouchableOpacity>
+        </View>
+
+        </View>
+    );
 };
 
 export default Login;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f2f4f7',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  card: {
-    width: '100%',
-    backgroundColor: '#fff',
-    padding: 25,
-    borderRadius: 15,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 25,
-    textAlign: 'center',
-    color: '#333',
-  },
-  inputContainer: {
-    marginBottom: 15,
-  },
-  input: {
-    borderRadius: 10,
-    color: '#000',
-    paddingHorizontal: 10,
-  },
-  button: {
-    backgroundColor: '#2563eb',
-    borderRadius: 10,
-    marginTop: 10,
-    paddingVertical: 12,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  registerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  registerText: {
-    color: '#555',
-  },
-  registerLink: {
-    color: '#2563eb',
-    marginLeft: 5,
-    fontWeight: 'bold',
-  },
-});

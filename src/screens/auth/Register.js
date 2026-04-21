@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { 
   Alert, 
   Text, 
@@ -92,8 +92,9 @@ const Register = () => {
                 Full Name
               </Text>
               <CustomTextInput
-                placeholder={'Enter your full name'}
-                value={val => setFullName(val)}
+                placeholder="Enter your full name"
+                value={fullName}
+                onChangeText={setFullName}
                 containerStyle={{
                   backgroundColor: '#fff',
                   borderRadius: 8,
@@ -126,7 +127,8 @@ const Register = () => {
               </Text>
               <CustomTextInput
                 placeholder={'Enter your email'}
-                value={val => setEmailAdd(val)}
+                value={emailAdd}
+                onChangeText={setEmailAdd}
                 containerStyle={{
                   backgroundColor: '#fff',
                   borderRadius: 8,
@@ -160,7 +162,8 @@ const Register = () => {
               <CustomTextInput
                 placeholder={'Create a password'}
                 secureTextEntry={true}
-                value={val => setPassword(val)}
+                value={password}
+                onChangeText={setPassword}
                 containerStyle={{
                   backgroundColor: '#fff',
                   borderRadius: 8,
@@ -194,7 +197,8 @@ const Register = () => {
               <CustomTextInput
                 placeholder={'Re-enter your password'}
                 secureTextEntry={true}
-                value={val => setConfirmPassword(val)}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
                 containerStyle={{
                   backgroundColor: '#fff',
                   borderRadius: 8,

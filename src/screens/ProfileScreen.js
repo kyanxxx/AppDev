@@ -7,15 +7,11 @@ const ProfileScreen = () => {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 3,
-        borderColor: 'blue',
       }}
     >
       <Image
-        source={{
-          uri: IMG.LOGO,
-        }}
-        style={{ width: 200, height: 200 }}
+        source={IMG.LOGO}
+        style={{ width: 350, height: 350 }}
       />
       <Text style={{ fontSize: 40 }}>ProfileScreen</Text>
     </View>

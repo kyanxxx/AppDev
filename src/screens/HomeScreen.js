@@ -1,29 +1,24 @@
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { IMG, ROUTES } from '../utils';
+import { authLogout } from '../app/actions';
+import { Button } from '@react-navigation/elements';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   return (
     <View
       style={{
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 3,
-        borderColor: 'red',
+        justifyContent: 'center',  
       }}
     >
-      <Image
-        source={{
-          uri: IMG.LOGO,
-          // uri: 'https://th.bing.com/th/id/R.5eb1959636a370b661bc91940fe49cee?rik=DiotHJlkKQR6dg&riu=http%3a%2f%2fwww.datwebdigital.com%2fDWD%2fwp-content%2fuploads%2f2012%2f06%2flogo-design.jpg&ehk=fa8lsC0cm1nXH1dOqP%2f9dC1ohF3%2bcobEoqkMOaxrV2I%3d&risl=&pid=ImgRaw&r=0',
-        }}
-        style={{ width: 200, height: 200 }}
-      />
+      <Image source={IMG.LOGO} style={{ width: 350, height: 350 }} />
       <Text style={{ fontSize: 20 }}>HomeScreen</Text>
-
-      {/* <Button title="GO TO PROFILE" /> */}
 
       <TouchableOpacity
         onPress={() => {
@@ -35,9 +30,27 @@ const HomeScreen = () => {
             backgroundColor: 'green',
             padding: 10,
             borderRadius: 20,
+            marginTop: 20,
           }}
         >
-          <Text style={{ fontSize: 40, color: 'white' }}>GO TO PROFILE</Text>
+          <Text style={{ fontSize: 24, color: 'white' }}>VISIT PROFILE</Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => {
+          dispatch(authLogout());
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'red',
+            padding: 10,
+            borderRadius: 20,
+            marginTop: 20,
+          }}
+        >
+          <Text style={{ fontSize: 24, color: 'white' }}>LOG OUT</Text>
         </View>
       </TouchableOpacity>
     </View>

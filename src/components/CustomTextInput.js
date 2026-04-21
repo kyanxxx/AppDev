@@ -5,6 +5,7 @@ const CustomTextInput = ({
   label,
   placeholder,
   value,
+  onChangeText,
   textStyle,
   containerStyle,
 }) => {
@@ -13,7 +14,8 @@ const CustomTextInput = ({
       <Text style={{ fontWeight: 'bold' }}>{label}</Text>
       <TextInput
         placeholder={placeholder}
-        onChangeText={value}
+        value={value}
+        onChangeText={onChangeText}
         style={[
           textStyle,
           {
