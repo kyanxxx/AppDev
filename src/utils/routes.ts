@@ -1,9 +1,8 @@
-export default {
-  // Auth
+const ROUTES = {
   LOGIN: 'Login',
   REGISTER: 'Register',
-
-  // Main
   HOME: 'Home',
   PROFILE: 'Profile',
-};
+} as const;
+
+export default ROUTES;

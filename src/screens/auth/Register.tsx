@@ -1,44 +1,37 @@
 import React, { useState } from 'react';
-import { 
-  Alert, 
-  Text, 
-  TouchableOpacity, 
-  View, 
-  ScrollView,
+import {
+  Alert,
   KeyboardAvoidingView,
-  Platform 
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import { ROUTES } from '../../utils';
 
-const Register = () => {
+const Register = (): React.JSX.Element => {
   const [fullName, setFullName] = useState('');
   const [emailAdd, setEmailAdd] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigation = useNavigation<any>();
 
-  const navigation = useNavigation();
-
-  const handleRegister = () => {
+  const handleRegister = (): void => {
     if (fullName === '' || emailAdd === '' || password === '' || confirmPassword === '') {
-      Alert.alert(
-        'Invalid Credentials',
-        'Please fill in all fields',
-      );
+      Alert.alert('Invalid Credentials', 'Please fill in all fields');
       return;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert(
-        'Password Mismatch',
-        'Password and confirm password do not match',
-      );
+      Alert.alert('Password Mismatch', 'Password and confirm password do not match');
       return;
     }
 
-    // Add your registration logic here
     Alert.alert('Success', 'Registration successful!');
   };
 
@@ -47,10 +40,7 @@ const Register = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1, backgroundColor: '#f5f5f5' }}
     >
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        keyboardShouldPersistTaps="handled"
-      >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
         <View
           style={{
             flex: 1,
@@ -58,37 +48,40 @@ const Register = () => {
             justifyContent: 'center',
           }}
         >
-          {/* Header */}
           <View style={{ marginBottom: 30 }}>
-            <Text style={{ 
-              fontSize: 28, 
-              fontWeight: 'bold', 
-              color: '#333',
-              textAlign: 'center',
-              marginBottom: 5
-            }}>
+            <Text
+              style={{
+                fontSize: 28,
+                fontWeight: 'bold',
+                color: '#333',
+                textAlign: 'center',
+                marginBottom: 5,
+              }}
+            >
               Create Account
             </Text>
-            <Text style={{ 
-              fontSize: 14, 
-              color: '#666',
-              textAlign: 'center'
-            }}>
+            <Text
+              style={{
+                fontSize: 14,
+                color: '#666',
+                textAlign: 'center',
+              }}
+            >
               Sign up to get started
             </Text>
           </View>
 
-          {/* Form Fields */}
           <View style={{ width: '100%' }}>
-            {/* Full Name Field */}
             <View style={{ marginBottom: 15 }}>
-              <Text style={{ 
-                fontSize: 14, 
-                fontWeight: '600', 
-                color: '#555',
-                marginBottom: 5,
-                marginLeft: 5
-              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: '600',
+                  color: '#555',
+                  marginBottom: 5,
+                  marginLeft: 5,
+                }}
+              >
                 Full Name
               </Text>
               <CustomTextInput
@@ -113,20 +106,21 @@ const Register = () => {
                 }}
               />
             </View>
-            
-            {/* Email Field */}
+
             <View style={{ marginBottom: 15 }}>
-              <Text style={{ 
-                fontSize: 14, 
-                fontWeight: '600', 
-                color: '#555',
-                marginBottom: 5,
-                marginLeft: 5
-              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: '600',
+                  color: '#555',
+                  marginBottom: 5,
+                  marginLeft: 5,
+                }}
+              >
                 Email Address
               </Text>
               <CustomTextInput
-                placeholder={'Enter your email'}
+                placeholder="Enter your email"
                 value={emailAdd}
                 onChangeText={setEmailAdd}
                 containerStyle={{
@@ -147,21 +141,22 @@ const Register = () => {
                 }}
               />
             </View>
-            
-            {/* Password Field */}
+
             <View style={{ marginBottom: 15 }}>
-              <Text style={{ 
-                fontSize: 14, 
-                fontWeight: '600', 
-                color: '#555',
-                marginBottom: 5,
-                marginLeft: 5
-              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: '600',
+                  color: '#555',
+                  marginBottom: 5,
+                  marginLeft: 5,
+                }}
+              >
                 Password
               </Text>
               <CustomTextInput
-                placeholder={'Create a password'}
-                secureTextEntry={true}
+                placeholder="Create a password"
+                secureTextEntry
                 value={password}
                 onChangeText={setPassword}
                 containerStyle={{
@@ -182,21 +177,22 @@ const Register = () => {
                 }}
               />
             </View>
-            
-            {/* Confirm Password Field */}
+
             <View style={{ marginBottom: 20 }}>
-              <Text style={{ 
-                fontSize: 14, 
-                fontWeight: '600', 
-                color: '#555',
-                marginBottom: 5,
-                marginLeft: 5
-              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: '600',
+                  color: '#555',
+                  marginBottom: 5,
+                  marginLeft: 5,
+                }}
+              >
                 Confirm Password
               </Text>
               <CustomTextInput
-                placeholder={'Re-enter your password'}
-                secureTextEntry={true}
+                placeholder="Re-enter your password"
+                secureTextEntry
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 containerStyle={{
@@ -219,9 +215,8 @@ const Register = () => {
             </View>
           </View>
 
-          {/* Register Button */}
           <CustomButton
-            label={'CREATE ACCOUNT'}
+            label="CREATE ACCOUNT"
             containerStyle={{
               backgroundColor: '#4a90e2',
               borderRadius: 8,
@@ -243,7 +238,6 @@ const Register = () => {
             onPress={handleRegister}
           />
 
-          {/* Login Link */}
           <View
             style={{
               flexDirection: 'row',
@@ -252,28 +246,29 @@ const Register = () => {
               marginTop: 15,
             }}
           >
-            <Text style={{ color: '#666', fontSize: 13 }}>
-              Already have an account?
-            </Text>
+            <Text style={{ color: '#666', fontSize: 13 }}>Already have an account?</Text>
             <TouchableOpacity onPress={() => navigation.navigate(ROUTES.LOGIN)}>
-              <Text style={{ 
-                color: '#4a90e2', 
-                marginLeft: 5, 
-                fontWeight: 'bold',
-                fontSize: 13 
-              }}>
+              <Text
+                style={{
+                  color: '#4a90e2',
+                  marginLeft: 5,
+                  fontWeight: 'bold',
+                  fontSize: 13,
+                }}
+              >
                 Sign In
               </Text>
             </TouchableOpacity>
           </View>
 
-          {/* Terms and Conditions */}
-          <Text style={{ 
-            color: '#999', 
-            fontSize: 11, 
-            textAlign: 'center',
-            marginTop: 20
-          }}>
+          <Text
+            style={{
+              color: '#999',
+              fontSize: 11,
+              textAlign: 'center',
+              marginTop: 20,
+            }}
+          >
             By signing up, you agree to our Terms of Service and Privacy Policy
           </Text>
         </View>

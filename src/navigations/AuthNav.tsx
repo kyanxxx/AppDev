@@ -1,13 +1,13 @@
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { ROUTES } from '../utils';
 
-// screens
+import { ROUTES } from '../utils';
 import Login from '../screens/auth/Login';
 import Register from '../screens/auth/Register';
 
 const Stack = createStackNavigator();
 
-const AuthNavigation = () => {
+const AuthNavigation = (): React.JSX.Element => {
   return (
     <Stack.Navigator initialRouteName={ROUTES.LOGIN}>
       <Stack.Screen

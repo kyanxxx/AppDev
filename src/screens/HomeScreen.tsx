@@ -1,12 +1,13 @@
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { IMG, ROUTES } from '../utils';
-import { authLogout } from '../app/actions';
-import { Button } from '@react-navigation/elements';
 
-const HomeScreen = () => {
-  const navigation = useNavigation();
+import { authLogout } from '../app/actions';
+import { IMG, ROUTES } from '../utils';
+
+const HomeScreen = (): React.JSX.Element => {
+  const navigation = useNavigation<any>();
   const dispatch = useDispatch();
 
   return (
@@ -14,7 +15,7 @@ const HomeScreen = () => {
       style={{
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',  
+        justifyContent: 'center',
       }}
     >
       <Image source={IMG.LOGO} style={{ width: 350, height: 350 }} />
